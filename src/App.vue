@@ -17,15 +17,11 @@
 
 
 <script>
+  
   import ScheduleElem from './components/ScheduleElem.vue'
   import FormElem from './components/FormElem.vue'
-  export default {
-    components: {
-      ScheduleElem, FormElem
-    },
-    data() {
-      return {
-        week: [
+
+  let initialData = [
           {
             idDay: 1,
             nameDay: 'ПН',
@@ -73,6 +69,19 @@
             tasks: []
           },
         ]
+
+  export default {
+    components: {
+      ScheduleElem, FormElem
+    },
+    data() {
+      return {
+        week: JSON.parse(localStorage.getItem('weekSchedule')) ?? initialData
+      }
+    },
+    watch: {
+      week() {
+        localStorage.setItem('weekSchedule', JSON.stringify([...this.week]))
       }
     },
     methods: {
